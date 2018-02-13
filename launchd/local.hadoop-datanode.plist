@@ -9,18 +9,14 @@
         <key>EnvironmentVariables</key>
         <dict>
             <key>JAVA</key>
-            <string>/usr/bin/java</string>
+            <string>__JAVA__</string>
             <key>HADOOP_CONF_DIR</key>
-            <string>/Volumes/cluster/hadoop-current/etc/hadoop</string>
+            <string>__HADOOP_CONF_DIR__</string>
             <key>HADOOP_PREFIX</key>
-            <string>/Volumes/cluster/hadoop-current</string>
-            <key>HADOOP_LOG_DIR</key>
-            <string>/Volumes/cluster/hadoop-current/logs</string>
-            <key>HADOOP_PID_DIR</key>
-            <string>/Volumes/cluster/hadoop-current/pids</string>
+            <string>__HADOOP_PREFIX__</string>
         </dict>
         <key>Program</key>
-        <string>/Volumes/cluster/hadoop-current/bin/hdfs</string>
+        <string>__HADOOP_PREFIX__/bin/hdfs</string>
         <key>ProgramArguments</key>
         <array>
             <string>hdfs</string>
@@ -29,11 +25,12 @@
         <key>ProcessType</key>
         <string>Background</string>
         <key>StandardOutPath</key>
-        <string>/var/log/hadoop/datanode.log</string>
+        <string>__HADOOP_LOG_DIR__/datanode.log</string>
         <key>StandardErrorPath</key>
-        <string>/var/log/hadoop/datanode.log</string>
+        <string>__HADOOP_LOG_DIR__/datanode.log</string>
         <key>KeepAlive</key>
         <dict>
+            <!-- Some nodes occasionally lose their cluster disk -->
             <key>PathState</key>
             <dict>
                 <key>/Volumes/cluster</key>
