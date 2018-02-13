@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer/DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>local.hadoop-datanode</string>
+        <key>UserName</key>
+        <string>cluster</string>
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>JAVA</key>
+            <string>/usr/bin/java</string>
+            <key>HADOOP_CONF_DIR</key>
+            <string>/Volumes/cluster/hadoop-current/etc/hadoop</string>
+            <key>HADOOP_PREFIX</key>
+            <string>/Volumes/cluster/hadoop-current</string>
+            <key>HADOOP_LOG_DIR</key>
+            <string>/Volumes/cluster/hadoop-current/logs</string>
+            <key>HADOOP_PID_DIR</key>
+            <string>/Volumes/cluster/hadoop-current/pids</string>
+        </dict>
+        <key>Program</key>
+        <string>/Volumes/cluster/hadoop-current/bin/hdfs</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>hdfs</string>
+            <string>datanode</string>
+        </array>
+        <key>ProcessType</key>
+        <string>Background</string>
+        <key>StandardOutPath</key>
+        <string>/var/log/hadoop/datanode.log</string>
+        <key>StandardErrorPath</key>
+        <string>/var/log/hadoop/datanode.log</string>
+        <key>KeepAlive</key>
+        <dict>
+            <key>PathState</key>
+            <dict>
+                <key>/Volumes/cluster</key>
+                <true/>
+            </dict>
+        </dict>
+        <key>ThrottleInterval</key>
+        <integer>100</integer>
+    </dict>
+</plist>
