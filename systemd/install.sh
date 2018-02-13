@@ -5,6 +5,8 @@
 srvdir=$(pkg-config systemd --variable=systemdsystemunitdir)
 mkdir -p $srvdir
 
+# install needs to replace __XXX__ patterns in service files with $XXX
+
 #install -m 600 hadoop-namenode.service $srvdir/
 install -m 600 hadoop-datanode.service $srvdir/
 #install -m 600 hadoop-journalnode.service $srvdir/

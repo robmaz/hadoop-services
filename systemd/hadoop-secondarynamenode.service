@@ -2,16 +2,16 @@
 Description=Start a Hadoop checkpoint node
 After=iptables.target
 Wants=hadoop-namenode.service
-ConditionPathIsDirectory=$HADOOP_PID_DIR
-ConditionPathIsReadWrite=$HADOOP_PID_DIR
+ConditionPathIsDirectory=__HADOOP_PID_DIR__
+ConditionPathIsReadWrite=__HADOOP_PID_DIR__
 
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=$HADOOP_CONF_DIR"
-ExecStart=$HADOOP_HOME/sbin/hadoop-daemon.sh start secondarynamenode
-ExecStop=$HADOOP_HOME/sbin/hadoop-daemon.sh stop secondarynamenode
-PIDFile=$HADOOP_PID_DIR/hadoop-secondarynamenode.pid
+Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start secondarynamenode
+ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop secondarynamenode
+PIDFile=__HADOOP_PID_DIR__/hadoop-secondarynamenode.pid
 
 [Install]
 WantedBy=default.target
