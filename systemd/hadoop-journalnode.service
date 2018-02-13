@@ -1,0 +1,20 @@
+[Unit]
+Description=Start a Hadoop journalnode
+After=network.target
+Wants=hadoop-namenode.service
+ConditionPathIsDirectory=$HADOOP_PID_DIR
+ConditionPathIsReadWrite=$HADOOP_PID_DIR
+
+[Service]
+Type=forking
+User=cluster
+Environment="HADOOP_CONF_DIR=$HADOOP_CONF_DIR"
+ExecStart=$HADOOP_HOME/sbin/hadoop-daemon.sh start journalnode
+ExecStop=$HADOOP_HOME/sbin/hadoop-daemon.sh stop journalnode
+PIDFile=$HADOOP_PID_DIR/hadoop-journalnode.pid
+Restart=true
+StartLimitInterval=1min
+StartLimitBurst=2
+
+[Install]
+WantedBy=default.target

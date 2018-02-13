@@ -1,0 +1,17 @@
+[Unit]
+Description=Start the Hadoop namenode
+After=network.target
+ConditionPathIsDirectory=$HADOOP_PID_DIR
+ConditionPathIsReadWrite=$HADOOP_PID_DIR
+
+[Service]
+Type=forking
+User=cluster
+Environment="HADOOP_CONF_DIR=$HADOOP_CONF_DIR"
+ExecStart=$HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
+ExecStop=$HADOOP_HOME/sbin/hadoop-daemon.sh stop namenode
+PIDFile=$HADOOP_PID_DIR/hadoop-namenode.pid
+Restart=true
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=Start a Hadoop datanode
+After=network.target
+ConditionPathIsDirectory=$HADOOP_PID_DIR
+ConditionPathIsReadWrite=$HADOOP_PID_DIR
+
+[Service]
+Type=forking
+User=cluster
+Environment="HADOOP_CONF_DIR=$HADOOP_CONF_DIR"
+ExecStart=$HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
+ExecStop=$HADOOP_HOME/sbin/hadoop-daemon.sh stop datanode
+PIDFile=$HADOOP_PID_DIR/hadoop-datanode.pid
+Restart=true
+StartLimitInterval=1min
+StartLimitBurst=2
+
+[Install]
+WantedBy=default.target
