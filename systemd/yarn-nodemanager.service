@@ -12,9 +12,9 @@ Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
 ExecStart=__HADOOP_HOME__/sbin/yarn-daemon.sh start nodemanager
 ExecStop=__HADOOP_HOME__/sbin/yarn-daemon.sh stop nodemanager
 PIDFile=__YARN_PID_DIR__/yarn-nodemanager.pid
-Restart=true
 StartLimitInterval=1min
 StartLimitBurst=2
+Restart=always
 
 [Install]
 WantedBy=default.target

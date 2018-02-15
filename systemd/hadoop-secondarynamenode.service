@@ -12,6 +12,7 @@ Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
 ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start secondarynamenode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop secondarynamenode
 PIDFile=__HADOOP_PID_DIR__/hadoop-secondarynamenode.pid
+Restart=always
 
 [Install]
 WantedBy=default.target

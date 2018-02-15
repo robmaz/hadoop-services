@@ -11,7 +11,7 @@ Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
 ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start datanode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop datanode
 PIDFile=__HADOOP_PID_DIR__/hadoop-datanode.pid
-Restart=true
+Restart=always
 StartLimitInterval=1min
 StartLimitBurst=2
 

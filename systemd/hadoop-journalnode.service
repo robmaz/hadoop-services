@@ -12,7 +12,7 @@ Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
 ExecStart__HADOOP_HOME__/sbin/hadoop-daemon.sh start journalnode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop journalnode
 PIDFile=__HADOOP_PID_DIR__/hadoop-journalnode.pid
-Restart=true
+Restart=always
 StartLimitInterval=1min
 StartLimitBurst=2
 
