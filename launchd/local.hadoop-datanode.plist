@@ -6,6 +6,8 @@
         <string>local.hadoop-datanode</string>
         <key>UserName</key>
         <string>cluster</string>
+        <key>GroupName</key>
+        <string>daemon</string>
         <key>EnvironmentVariables</key>
         <dict>
             <key>JAVA</key>
