@@ -1,16 +1,16 @@
 [Unit]
 Description=Start a Hadoop datanode
 After=network.target
+Wants=hadoop-namenode.service
 
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__ HADOOP_PID_DIR=%t/hadoop"
 RuntimeDirectory=hadoop
-RuntimeDirectoryMode=0755
 ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start datanode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop datanode
-PIDFile=%t/hadoop/hadoop-datanode.pid
+PIDFile=%t/hadoop/hadoop-cluster-datanode.pid
 Restart=always
 StartLimitInterval=1min
 StartLimitBurst=2

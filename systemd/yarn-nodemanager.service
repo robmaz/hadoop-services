@@ -2,17 +2,15 @@
 Description=Start a Yarn nodemanager
 After=network.target
 Wants=hadoop-datanode.service
-Requires=var-run-hadoop.service
 
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
 RuntimeDirectory=hadoop
-RuntimeDirectoryMode=0755
+Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__ YARN_PID_DIR=%t/hadoop"
 ExecStart=__HADOOP_HOME__/sbin/yarn-daemon.sh start nodemanager
 ExecStop=__HADOOP_HOME__/sbin/yarn-daemon.sh stop nodemanager
-PIDFile=%t/hadoop/yarn-nodemanager.pid
+PIDFile=%t/hadoop/yarn-cluster-nodemanager.pid
 StartLimitInterval=1min
 StartLimitBurst=2
 Restart=always

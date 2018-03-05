@@ -1,18 +1,16 @@
 [Unit]
 Description=Start a Hadoop checkpoint node
-After=iptables.target
+After=network.target
 Wants=hadoop-namenode.service
-Requires=var-run-hadoop.service
 
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__ HADOOP_PID_DIR=%t/hadoop"
 RuntimeDirectory=hadoop
-RuntimeDirectoryMode=0755
 ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start secondarynamenode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop secondarynamenode
-PIDFile=%t/hadoop/hadoop-secondarynamenode.pid
+PIDFile=%t/hadoop/hadoop-cluster-secondarynamenode.pid
 Restart=always
 
 [Install]
