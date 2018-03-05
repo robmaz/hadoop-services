@@ -1,5 +1,0 @@
-[Unit]
-Description=Hadoop rundir
-
-[Path]
-PathExists=/var/run/hadoop

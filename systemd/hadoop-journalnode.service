@@ -8,9 +8,11 @@ Requires=var-run-hadoop.service
 Type=forking
 User=cluster
 Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+RuntimeDirectory=hadoop
+RuntimeDirectoryMode=0755
 ExecStart__HADOOP_HOME__/sbin/hadoop-daemon.sh start journalnode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop journalnode
-PIDFile=__HADOOP_PID_DIR__/hadoop-journalnode.pid
+PIDFile=%t/hadoop/hadoop-journalnode.pid
 Restart=always
 StartLimitInterval=1min
 StartLimitBurst=2

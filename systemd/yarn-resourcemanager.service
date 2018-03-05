@@ -8,9 +8,11 @@ Requires=var-run-hadoop.service
 Type=forking
 User=cluster
 Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+RuntimeDirectory=hadoop
+RuntimeDirectoryMode=0755
 ExecStart=__HADOOP_HOME__/sbin/yarn-daemon.sh start resourcemanager
 ExecStop=__HADOOP_HOME__/sbin/yarn-daemon.sh stop resourcemanager
-PIDFile=__YARN_PID_DIR__/yarn-resourcemanager.pid
+PIDFile=%t/hadoop/yarn-resourcemanager.pid
 StartLimitInterval=1min
 StartLimitBurst=2
 Restart=always

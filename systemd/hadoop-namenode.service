@@ -7,9 +7,11 @@ Requires=var-run-hadoop.service
 Type=forking
 User=cluster
 Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__"
+RuntimeDirectory=hadoop
+RuntimeDirectoryMode=0755
 ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start namenode
 ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop namenode
-PIDFile=__HADOOP_PID_DIR__/hadoop-namenode.pid
+PIDFile=%t/hadoop/hadoop-namenode.pid
 Restart=always
 
 [Install]
