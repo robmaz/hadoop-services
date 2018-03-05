@@ -2,8 +2,7 @@
 Description=Start the Yarn timeline server
 After=network.target
 Wants=yarn-resourcemanager.service
-ConditionPathIsDirectory=__YARN_PID_DIR__
-ConditionPathIsReadWrite=__YARN_PID_DIR__
+Requires=var-run-hadoop.service
 
 [Service]
 Type=forking

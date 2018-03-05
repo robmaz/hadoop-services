@@ -2,8 +2,7 @@
 Description=Start a Hadoop journalnode
 After=network.target
 Wants=hadoop-namenode.service
-ConditionPathIsDirectory=__HADOOP_PID_DIR__
-ConditionPathIsReadWrite=__HADOOP_PID_DIR__
+Requires=var-run-hadoop.service
 
 [Service]
 Type=forking

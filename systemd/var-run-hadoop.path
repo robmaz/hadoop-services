@@ -1,0 +1,10 @@
+[Unit]
+Description=Hadoop rundir
+
+[Path]
+PathExists=/var/run/hadoop
+
+[Install]
+WantedBy=hadoop-datanode.service yarn-nodemanager.service \
+    hadoop-namenode.service yarn-resourcemanager.service \
+    yarn-timelineserver.service hadoop-journalnode.service

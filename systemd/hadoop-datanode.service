@@ -1,8 +1,7 @@
 [Unit]
 Description=Start a Hadoop datanode
 After=network.target
-ConditionPathIsDirectory=__HADOOP_PID_DIR__
-ConditionPathIsReadWrite=__HADOOP_PID_DIR__
+Requires=var-run-hadoop.service
 
 [Service]
 Type=forking

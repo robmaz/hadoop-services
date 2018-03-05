@@ -2,8 +2,7 @@
 Description=Start a Yarn nodemanager
 After=network.target
 Wants=hadoop-datanode.service
-ConditionPathIsDirectory=__YARN_PID_DIR__
-ConditionPathIsReadWrite=__YARN_PID_DIR__
+Requires=var-run-hadoop.service
 
 [Service]
 Type=forking
