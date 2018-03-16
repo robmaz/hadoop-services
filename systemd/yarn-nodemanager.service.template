@@ -13,7 +13,7 @@ ExecStop=__HADOOP_HOME__/sbin/yarn-daemon.sh stop nodemanager
 PIDFile=%t/hadoop/yarn-cluster-nodemanager.pid
 StartLimitInterval=1min
 StartLimitBurst=2
-Restart=always
+Restart=on-failure
 
 [Install]
 WantedBy=default.target
