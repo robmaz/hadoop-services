@@ -5,12 +5,18 @@ After=network.target
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__ HADOOP_PID_DIR=%t/hadoop"
+Nice=-10
+OOMScoreAdjust=-1000
+IOSchedulingClass=realtime
+IOSchedulingPriority=5
 RuntimeDirectory=hadoop
-ExecStart=__HADOOP_HOME__/sbin/hadoop-daemon.sh start namenode
-ExecStop=__HADOOP_HOME__/sbin/hadoop-daemon.sh stop namenode
+Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop"
+ExecStart=__hadoop_prefix__/sbin/hadoop-daemon.sh start namenode
+ExecStop=__hadoop_prefix__/sbin/hadoop-daemon.sh stop namenode
 PIDFile=%t/hadoop/hadoop-cluster-namenode.pid
-Restart=on-failure
+Restart=always
+StartLimitInterval=1min
+StartLimitBurst=2
 
 [Install]
 WantedBy=default.target
