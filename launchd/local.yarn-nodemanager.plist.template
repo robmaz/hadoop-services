@@ -18,10 +18,12 @@
             <string>__HADOOP_PREFIX__</string>
         </dict>
         <key>Program</key>
-        <string>__HADOOP_PREFIX__/bin/yarn</string>
+        <string>/usr/local/sbin/delaystart</string>
         <key>ProgramArguments</key>
         <array>
-            <string>yarn</string>
+            <string>delaystart</string>
+            <string>30</string>
+            <string>__HADOOP_PREFIX__/bin/yarn</string>
             <string>nodemanager</string>
         </array>
         <key>ProcessType</key>
@@ -32,7 +34,6 @@
         <string>__HADOOP_LOG_DIR__/nodemanager.log</string>
         <key>KeepAlive</key>
         <dict>
-            <!-- Some nodes occasionally lose their cluster disk -->
             <key>PathState</key>
             <dict>
                 <key>/tmp/NO_NODEMANAGER</key>

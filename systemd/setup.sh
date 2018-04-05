@@ -1,12 +1,13 @@
 #!/bin/bash
 #
-# Setup hadoop services specified on the command line
+# Set up hadoop services specified on the command line
 #
 
+# usage notice
 usage="Usage: $0 <services>
 
   Install, enable and start systemd service files for various
-  Hadoop-related <services>, namely one or more of
+  Hadoop-related <services>, namely, one or more of
 
          hadoop-namenode
          hadoop-journalnode
@@ -18,20 +19,14 @@ usage="Usage: $0 <services>
 
   HADOOP_PREFIX and HADOOP_CONF_DIR need to point to your Hadoop installation."
 
-if [[ -z "$@" || -z "$HADOOP_CONF_DIR" || -z "$HADOOP_PREFIX" ]]; then
-  echo "$usage"
-fi
-
 # sed script to replace configuration items
 sscript="
-s/__HADOOP_HOME__/$HADOOP_PREFIX/g
-s/__HADOOP_CONF_DIR__/$HADOOP_CONF_DIR/g
+s/__hadoop_prefix__/$HADOOP_PREFIX/g
+s/__hadoop_conf_dir__/$HADOOP_CONF_DIR/g
 "
 
-srvdir=$(pkg-config systemd --variable=systemdsystemunitdir)
-mkdir -p $srvdir
 
-# install needs to replace __XXX__ patterns in service files with $XXX
+# install replacing __xxx__ patterns in service files
 function hs_install()
 {
   mod=${1}
@@ -44,6 +39,15 @@ function hs_install()
   sed -e "$sscript" $src > $tgt
   chmod $mod $tgt
 }
+
+### execution starts here ###
+
+if [[ -z "$@" || -z "$HADOOP_CONF_DIR" || -z "$HADOOP_PREFIX" ]]; then
+  echo "$usage"
+fi
+
+srvdir=$(pkg-config systemd --variable=systemdsystemunitdir)
+mkdir -p $srvdir
 
 for _s in "$@"; do
   srv=${_s}.service

@@ -6,14 +6,15 @@ Wants=yarn-resourcemanager.service
 [Service]
 Type=forking
 User=cluster
-Environment="HADOOP_CONF_DIR=__HADOOP_CONF_DIR__ YARN_PID_DIR=%t/hadoop"
+OOMScoreAdjust=-500
 RuntimeDirectory=hadoop
-ExecStart=__HADOOP_HOME__/sbin/yarn-daemon.sh start timelineserver
-ExecStop=__HADOOP_HOME__/sbin/yarn-daemon.sh stop timelineserver
+Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop"
+ExecStart=__hadoop_prefix__/sbin/yarn-daemon.sh start timelineserver
+ExecStop=__hadoop_prefix__/sbin/yarn-daemon.sh stop timelineserver
 PIDFile=%t/hadoop/yarn-cluster-timelineserver.pid
 StartLimitInterval=1min
 StartLimitBurst=2
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=default.target

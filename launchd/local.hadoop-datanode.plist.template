@@ -18,10 +18,12 @@
             <string>__HADOOP_PREFIX__</string>
         </dict>
         <key>Program</key>
-        <string>__HADOOP_PREFIX__/bin/hdfs</string>
+        <string>/usr/local/sbin/delaystart</string>
         <key>ProgramArguments</key>
         <array>
-            <string>hdfs</string>
+            <string>delaystart</string>
+            <string>15</string>
+            <string>__HADOOP_PREFIX__/bin/hdfs</string>
             <string>datanode</string>
         </array>
         <key>ProcessType</key>
