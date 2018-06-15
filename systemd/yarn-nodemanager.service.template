@@ -9,7 +9,7 @@ User=cluster
 Nice=5
 OOMScoreAdjust=-500
 RuntimeDirectory=hadoop
-Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop"
+Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop
 ExecStart=__hadoop_prefix__/sbin/yarn-daemon.sh start nodemanager
 ExecStop=__hadoop_prefix__/sbin/yarn-daemon.sh stop nodemanager
 PIDFile=%t/hadoop/yarn-cluster-nodemanager.pid

@@ -10,7 +10,7 @@ OOMScoreAdjust=-1000
 IOSchedulingClass=realtime
 IOSchedulingPriority=5
 RuntimeDirectory=hadoop
-Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop"
+Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop
 ExecStart=__hadoop_prefix__/sbin/hadoop-daemon.sh start namenode
 ExecStop=__hadoop_prefix__/sbin/hadoop-daemon.sh stop namenode
 PIDFile=%t/hadoop/hadoop-cluster-namenode.pid

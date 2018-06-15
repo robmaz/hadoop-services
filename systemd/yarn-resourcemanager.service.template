@@ -8,7 +8,7 @@ Type=forking
 User=cluster
 OOMScoreAdjust=-500
 RuntimeDirectory=hadoop
-Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop"
+Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop
 ExecStart=__hadoop_prefix__/sbin/yarn-daemon.sh start resourcemanager
 ExecStop=__hadoop_prefix__/sbin/yarn-daemon.sh stop resourcemanager
 PIDFile=%t/hadoop/yarn-cluster-resourcemanager.pid

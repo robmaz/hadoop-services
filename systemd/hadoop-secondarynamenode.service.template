@@ -9,7 +9,7 @@ User=cluster
 Nice=-5
 OOMScoreAdjust=-1000
 RuntimeDirectory=hadoop
-Environment="HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop"
+Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop
 ExecStart=__hadoop_prefix__/sbin/hadoop-daemon.sh start secondarynamenode
 ExecStop=__hadoop_prefix__/sbin/hadoop-daemon.sh stop secondarynamenode
 PIDFile=%t/hadoop/hadoop-cluster-secondarynamenode.pid
