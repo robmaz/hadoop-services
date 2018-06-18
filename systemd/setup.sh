@@ -21,8 +21,8 @@ usage="Usage: $0 <services>
 
 # sed script to replace configuration items
 sscript="
-s/__hadoop_prefix__/$HADOOP_PREFIX/g
-s/__hadoop_conf_dir__/$HADOOP_CONF_DIR/g
+s@__hadoop_prefix__@$HADOOP_PREFIX@g
+s@__hadoop_conf_dir__@$HADOOP_CONF_DIR@g
 "
 
 
