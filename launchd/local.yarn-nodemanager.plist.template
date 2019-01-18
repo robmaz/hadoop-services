@@ -23,7 +23,7 @@
         <array>
             <string>sh</string>
             <string>-c</string>
-            <string>sleep 120; exec __HADOOP_PREFIX__/bin/yarn nodemanager</string>
+            <string>sleep 90; exec __HADOOP_PREFIX__/bin/yarn nodemanager</string>
         </array>
         <key>ProcessType</key>
         <string>Background</string>
