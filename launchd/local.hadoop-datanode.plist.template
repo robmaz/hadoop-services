@@ -10,19 +10,20 @@
         <string>daemon</string>
         <key>EnvironmentVariables</key>
         <dict>
-            <key>JAVA</key>
-            <string>__JAVA__</string>
+            <key>JAVA_HOME</key>
+            <string>__JAVA_HOME__</string>
             <key>HADOOP_CONF_DIR</key>
             <string>__HADOOP_CONF_DIR__</string>
             <key>HADOOP_PREFIX</key>
             <string>__HADOOP_PREFIX__</string>
         </dict>
         <key>Program</key>
-        <string>__HADOOP_PREFIX__/bin/hdfs</string>
+        <string>/bin/sh</string>
         <key>ProgramArguments</key>
         <array>
-            <string>hdfs</string>
-            <string>datanode</string>
+            <string>sh</string>
+            <string>-c</string>
+            <string>sleep 60; exec __HADOOP_PREFIX__/bin/hdfs datanode</string>
         </array>
         <key>ProcessType</key>
         <string>Background</string>
@@ -32,7 +33,7 @@
         <string>__HADOOP_LOG_DIR__/datanode.log</string>
         <key>KeepAlive</key>
         <dict>
-            <!-- Some nodes occasionally lose their cluster disk -->
+            <!-- don't bother if we lose the cluster disk -->
             <key>PathState</key>
             <dict>
                 <key>/Volumes/cluster</key>

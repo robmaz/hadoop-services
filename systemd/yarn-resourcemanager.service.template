@@ -1,0 +1,20 @@
+[Unit]
+Description=Start the Yarn resourcemanager
+After=network.target
+Wants=hadoop-namenode.service
+
+[Service]
+Type=forking
+User=cluster
+OOMScoreAdjust=-500
+RuntimeDirectory=hadoop
+Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop
+ExecStart=__hadoop_prefix__/sbin/yarn-daemon.sh start resourcemanager
+ExecStop=__hadoop_prefix__/sbin/yarn-daemon.sh stop resourcemanager
+PIDFile=%t/hadoop/yarn-cluster-resourcemanager.pid
+StartLimitInterval=1min
+StartLimitBurst=2
+Restart=always
+
+[Install]
+WantedBy=default.target
