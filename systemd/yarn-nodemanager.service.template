@@ -4,18 +4,17 @@ After=network.target
 Wants=hadoop-datanode.service,yarn-resourcemanager.service
 
 [Service]
-Type=forking
+Type=simple
 User=cluster
 Nice=5
 OOMScoreAdjust=-500
 RuntimeDirectory=hadoop
-Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ YARN_PID_DIR=%t/hadoop
-ExecStart=__hadoop_prefix__/sbin/yarn-daemon.sh start nodemanager
-ExecStop=__hadoop_prefix__/sbin/yarn-daemon.sh stop nodemanager
+Environment=JAVA_HOME=__java_home__ HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PREFIX=__hadoop_prefix__ YARN_PID_DIR=%t/hadoop
+ExecStart=__hadoop_prefix__/bin/yarn nodemanager
 PIDFile=%t/hadoop/yarn-cluster-nodemanager.pid
 StartLimitInterval=1min
 StartLimitBurst=2
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

@@ -4,16 +4,15 @@ After=network.target
 Wants=hadoop-namenode.service
 
 [Service]
-Type=forking
+Type=simple
 User=cluster
 Nice=-5
 OOMScoreAdjust=-1000
 RuntimeDirectory=hadoop
-Environment=HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PID_DIR=%t/hadoop
-ExecStart=__hadoop_prefix__/sbin/hadoop-daemon.sh start secondarynamenode
-ExecStop=__hadoop_prefix__/sbin/hadoop-daemon.sh stop secondarynamenode
+Environment=JAVA_HOME=__java_home__ HADOOP_CONF_DIR=__hadoop_conf_dir__ HADOOP_PREFIX=__hadoop_prefix__ HADOOP_PID_DIR=%t/hadoop
+ExecStart=__hadoop_prefix__/bin/hdfs secondarynamenode
 PIDFile=%t/hadoop/hadoop-cluster-secondarynamenode.pid
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
