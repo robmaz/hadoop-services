@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+#
+# Configure Hadoop setup to be used when installing the service files
+# Rupert Mazzucco, 2020
+#
+
+usage="
+  Usage: $0 [...]
+
+  Configure Hadoop setup to be used for installing the service files.  The
+  configuration is written to .config which is then sourced by the installer.
+  This script will try to guess settings that are not specified.
+
+  Arguments:
+
+  --os-type         ... macos or linux
+  --java-home       ... path to Java 8 SDK
+  --hadoop-prefix   ... Hadoop installation folder
+  --hadoop-conf-dir ... Hadoop configuration folder
+  --service-dir     ... where to put the service files
+  "
+
+function check_os_type
+{
+  if [[ "$OS_TYPE" =~ "linux" ]]; then
+    OS_TYPE="linux"
+  elif [[ "$OS_TYPE" =~ "darwin" ]]; then
+    OS_TYPE="macos"
+  elif [[ "$OS_TYPE" =~ "macos" ]]; then
+    OS_TYPE="macos"
+  else
+    echo "ERROR: Unknown OS type $OS_TYPE"
+    exit 1
+  fi
+}
+
+function check_java_home
+{
+  # need to find Java 8 somewhere
+  # if HADOOP_JAVA_HOME was set, use it, if not
+  if [[ -z "$HADOOP_JAVA_HOME" ]]; then
+    # check /etc/alternatives (Linux), or /Library/Java (MacOS), JAVA_HOME, PATH
+    if [[ "$OS_TYPE" = "macos" ]]; then
+      # prefer OpenJDK
+      HADOOP_JAVA_HOME=$(ls /Library/Java/JavaVirtualMachines | grep "jdk" | egrep "(1.8.|-8)" | sort | grep "openjdk" | tail -1)
+      # fall back on whatever we find
+      if [[ -z "$HADOOP_JAVA_HOME" ]]; then
+        HADOOP_JAVA_HOME=$(ls /Library/Java/JavaVirtualMachines | grep "jdk" | egrep "(1.8.|-8)" | sort | tail -1)
+      fi
+      if [[ -n "$HADOOP_JAVA_HOME" ]]; then
+        HADOOP_JAVA_HOME="$HADOOP_JAVA_HOME/Contents/Home"
+      fi
+    elif [[ "$OS_TYPE" = "linux" ]]; then
+      HADOOP_JAVA_HOME="/etc/alternatives/java_sdk_1.8.0"
+    fi
+  fi
+  if [[ -z "$HADOOP_JAVA_HOME" ]]; then
+    echo "ERROR: could not find Java 8 SDK"
+    exit 1
+  fi
+}
+
+function check_hadoop_prefix
+{
+  # if HADOOP_PREFIX is set, check $HADOOP_PREFIX/bin for Hadoop command
+  # if not, try $(dirname $(realpath $(which hadoop)))/..
+  if [[ -z "$HADOOP_PREFIX" ]]; then
+    echo "ERROR: could not find Hadoop installation"
+    exit 1
+  fi
+}
+
+function check_hadoop_conf_dir
+{
+  # if HADOOP_CONF_DIR is set, use this
+  # else check /etc/hadoop/conf /etc/hadoop $HADOOP_PREFIX/etc/hadoop
+  if [[ -z "$HADOOP_CONF_DIR" ]]; then
+    echo "ERROR: could not determine Hadoop configuration folder"
+    exit 1
+  fi
+}
+
+function check_service_dir
+{
+  # if OS_TYPE = "macos"
+  # SERVICE_DIR="/Library/LaunchDaemons"
+  # if OS_TYP= "linux"
+  # SERVICE_DIR=$(pkg-config systemd --variable=systemdsystemunitdir)
+  if [[ -z "$SERVICE_DIR" ]]; then
+    echo "ERROR: could not figure out where to put service files"
+    exit 1
+  fi
+}
+
+# process command line
+reset=true
+for arg in ${@//=/ }
+do
+  if [[ -n "$reset" ]]; then
+    unset reset
+    set --
+  fi
+  case "$arg" in
+    --os-type)         set -- "$@" -o ;;
+    --java-home)       set -- "$@" -j ;;
+    --hadoop-prefix)   set -- "$@" -p ;;
+    --hadoop-conf-dir) set -- "$@" -c ;;
+    --service-dir)     set -- "$@" -s ;;
+    --help)            set -- "$@" -h ;;
+    --usage)           set -- "$@" -h ;;
+    *)                 set -- "$@" "$arg" ;;
+  esac
+done
+while getopts ":o:j:p:c:s:h" opt; do
+  case $opt in
+    o) OS_TYPE="$OPTARG"          ;;
+    j) HADOOP_JAVA_HOME="$OPTARG" ;;
+    p) HADOOP_PREFIX="$OPTARG"    ;;
+    c) HADOOP_CONF_DIR="$OPTARG"  ;;
+    s) SERVICE_DIR="$OPTARG"      ;;
+    h) echo "$usage" && exit 0 ;;
+   \?) echo "$usage" && exit 0 ;;
+    :) echo "ERROR: option -$OPTARG requires an argument" && exit 1 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# check arguments
+check_os_type
+check_java_home
+check_hadoop_prefix
+check_hadoop_conf_dir
+check_service_dir
+
+# write .config file
+cat > .config <<EOF
+OS_TYPE="$OS_TYPE"
+SERVICE_DIR="$SERVICE_DIR"
+HADOOP_JAVA_HOME="$JAVA_HOME"
+HADOOP_PREFIX="$HADOOP_PREFIX"
+HADOOP_CONF_DIR="$HADOOP_CONF_DIR"
+EOF
+
+echo "Configured settings:"
+echo
+cat .config
+echo
+exit 0
